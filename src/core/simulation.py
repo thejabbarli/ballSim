@@ -106,6 +106,10 @@ class Simulation:
             # Update physics (gravity, integration)
             self.physics_engine.update(self.balls, self.physics_dt)
 
+            # Update ball effects (color shifting)
+            for ball in self.balls:
+                ball.update(self.physics_dt)
+
             # Detect collisions
             collisions = self.collision_dispatcher.detect_all(
                 self.balls,

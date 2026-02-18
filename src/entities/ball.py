@@ -10,28 +10,34 @@ class Ball(Entity):
     """A bouncing ball entity."""
 
     def __init__(
-        self,
-        id: str,
-        position: np.ndarray,
-        velocity: np.ndarray,
-        radius: float,
-        color: str,
-        restitution: float = 0.9,
-        mass: float = 1.0,
-        hue_shift: str = "none",
-        hue_shift_speed: float = 60.0,
-        hue_shift_amount: float = 30.0
+            self,
+            id: str,
+            position: np.ndarray,
+            velocity: np.ndarray,
+            radius: float,
+            color: str,
+            restitution: float = 0.9,
+            mass: float = 1.0,
+            hue_shift: str = "none",
+            hue_shift_speed: float = 60.0,
+            hue_shift_amount: float = 30.0,
+            outline: bool = False,
+            outline_color: str = "#ffffff",
+            outline_thickness: float = 2.0
     ):
         super().__init__(id, position, velocity)
         self.radius = radius
-        self.base_color = color  # original color
-        self.color = color       # current color (may shift)
+        self.base_color = color
+        self.color = color
         self.restitution = restitution
         self.mass = mass
         self.hue_shift = hue_shift
         self.hue_shift_speed = hue_shift_speed
         self.hue_shift_amount = hue_shift_amount
-        self._hue_offset = 0.0  # accumulated hue shift
+        self._hue_offset = 0.0
+        self.outline = outline
+        self.outline_color = outline_color
+        self.outline_thickness = outline_thickness
 
     @classmethod
     def from_config(cls, config: BallConfig) -> "Ball":
@@ -46,7 +52,10 @@ class Ball(Entity):
             mass=config.mass,
             hue_shift=config.hue_shift,
             hue_shift_speed=config.hue_shift_speed,
-            hue_shift_amount=config.hue_shift_amount
+            hue_shift_amount=config.hue_shift_amount,
+            outline=config.outline,
+            outline_color=config.outline_color,
+            outline_thickness=config.outline_thickness
         )
 
     def update(self, dt: float) -> None:

@@ -53,9 +53,13 @@ class BallConfig:
     restitution: float = 0.9
     mass: float = 1.0
     # Color shifting
-    hue_shift: str = "none"  # "none", "continuous", "on_bounce"
-    hue_shift_speed: float = 60.0  # degrees per second (continuous)
-    hue_shift_amount: float = 30.0  # degrees per bounce (on_bounce)
+    hue_shift: str = "none"
+    hue_shift_speed: float = 60.0
+    hue_shift_amount: float = 30.0
+    # Border
+    outline: bool = False
+    outline_color: str = "#ffffff"
+    outline_thickness: float = 2.0
 
 
 @dataclass
@@ -212,7 +216,10 @@ class ConfigLoader:
                 mass=b.get('mass', 1.0),
                 hue_shift=b.get('hue_shift', 'none'),
                 hue_shift_speed=b.get('hue_shift_speed', 60.0),
-                hue_shift_amount=b.get('hue_shift_amount', 30.0)
+                hue_shift_amount=b.get('hue_shift_amount', 30.0),
+                outline=b.get('outline', False),
+                outline_color=b.get('outline_color', '#ffffff'),
+                outline_thickness=b.get('outline_thickness', 2.0)
             )
             for b in raw['balls']
         ]

@@ -76,11 +76,11 @@ class CairoRenderer:
         self.ctx.set_source_rgb(r, g, b)
         self.ctx.set_line_width(boundary.thickness)
         self.ctx.stroke()
-    
+
     def render_ball(self, ball: Ball) -> None:
         """Render a ball."""
         r, g, b = hex_to_rgb(ball.color)
-        
+
         # Draw filled circle
         self.ctx.arc(
             ball.position[0],
@@ -91,6 +91,20 @@ class CairoRenderer:
         )
         self.ctx.set_source_rgb(r, g, b)
         self.ctx.fill()
+
+        # Draw outline if enabled
+        if ball.outline:
+            r, g, b = hex_to_rgb(ball.outline_color)
+            self.ctx.arc(
+                ball.position[0],
+                ball.position[1],
+                ball.radius,
+                0,
+                2 * math.pi
+            )
+            self.ctx.set_source_rgb(r, g, b)
+            self.ctx.set_line_width(ball.outline_thickness)
+            self.ctx.stroke()
 
     def render_trail_particle(
             self,

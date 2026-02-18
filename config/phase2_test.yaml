@@ -34,7 +34,7 @@ physics:
 # -------------------------------------------------------------------
 
 background:
-  color: "#1a1a2e"
+  color: "#000000"
 
 # -------------------------------------------------------------------
 # BOUNDARIES
@@ -91,20 +91,26 @@ balls:
     color: "#e74c3c"
     position: [500, 100]
     velocity: [200, 50]
-    restitution: 0.9
+    restitution: 0.99
     mass: 1.0
     hue_shift: continuous    # smooth rainbow
     hue_shift_speed: 90      # degrees per second
+    outline: true
+    outline_color: "#ffffff"
+    outline_thickness: 3
 
   - id: ball_2
-    radius: 25
+    radius: 20
     color: "#2ecc71"
     position: [780, 120]
     velocity: [-150, 80]
-    restitution: 0.92
-    mass: 1.2
+    restitution: 0.99
+    mass: 1.0
     hue_shift: on_bounce     # changes on collision
     hue_shift_amount: 45     # degrees per bounce
+    outline: false
+    outline_color: "#ffffff"
+    outline_thickness: 3
 
 
 # -------------------------------------------------------------------
