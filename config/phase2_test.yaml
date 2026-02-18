@@ -1,0 +1,127 @@
+# BallSim Configuration - Phase 2 Test
+# Multiple balls with obstacles
+
+# -------------------------------------------------------------------
+# SIMULATION SETTINGS
+# -------------------------------------------------------------------
+
+simulation:
+  duration_seconds: 8
+  substeps: 4
+
+# -------------------------------------------------------------------
+# OUTPUT SETTINGS
+# -------------------------------------------------------------------
+
+output:
+  width: 1280
+  height: 720
+  fps: 60
+  path: "output/multi_ball.mp4"
+  codec: libx264
+  bitrate: "8M"
+
+# -------------------------------------------------------------------
+# PHYSICS SETTINGS
+# -------------------------------------------------------------------
+
+physics:
+  gravity: [0, 980]
+  integrator: euler
+
+# -------------------------------------------------------------------
+# VISUAL SETTINGS
+# -------------------------------------------------------------------
+
+background:
+  color: "#1a1a2e"
+
+# -------------------------------------------------------------------
+# BOUNDARIES
+# -------------------------------------------------------------------
+
+boundaries:
+  # Outer circle (containment)
+  - type: circle
+    id: outer_circle
+    center: [640, 360]
+    radius: 340
+    color: "#FFFFFF"
+    thickness: 3
+    is_containment: true
+
+  # Inner circle obstacle
+  - type: circle
+    id: inner_obstacle
+    center: [640, 360]
+    radius: 60
+    color: "#e74c3c"
+    thickness: 2
+    is_containment: false
+
+  # Rectangle obstacle - left
+  - type: rectangle
+    id: rect_left
+    x: 350
+    y: 280
+    width: 80
+    height: 160
+    color: "#3498db"
+    thickness: 2
+    is_containment: false
+
+  # Rectangle obstacle - right
+  - type: rectangle
+    id: rect_right
+    x: 850
+    y: 280
+    width: 80
+    height: 160
+    color: "#3498db"
+    thickness: 2
+    is_containment: false
+
+# -------------------------------------------------------------------
+# BALLS
+# -------------------------------------------------------------------
+
+balls:
+  - id: ball_1
+    radius: 20
+    color: "#e74c3c"
+    position: [500, 100]
+    velocity: [200, 50]
+    restitution: 0.9
+    mass: 1.0
+
+  - id: ball_2
+    radius: 25
+    color: "#2ecc71"
+    position: [780, 120]
+    velocity: [-150, 80]
+    restitution: 0.92
+    mass: 1.2
+
+  - id: ball_3
+    radius: 18
+    color: "#f39c12"
+    position: [640, 80]
+    velocity: [50, 100]
+    restitution: 0.88
+    mass: 0.8
+
+# -------------------------------------------------------------------
+# TRAILS (disabled for Phase 2)
+# -------------------------------------------------------------------
+
+trails:
+  enabled: false
+
+# -------------------------------------------------------------------
+# LOGGING
+# -------------------------------------------------------------------
+
+logging:
+  level: INFO
+  file: "logs/simulation.log"
+  console: true

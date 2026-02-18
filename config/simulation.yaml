@@ -1,0 +1,80 @@
+# BallSim Configuration - Phase 1 Test
+# Single ball bouncing inside a circle
+
+# -------------------------------------------------------------------
+# SIMULATION SETTINGS
+# -------------------------------------------------------------------
+
+simulation:
+  duration_seconds: 5       # Total simulation length
+  substeps: 4               # Physics steps per frame (higher = more stable)
+
+# -------------------------------------------------------------------
+# OUTPUT SETTINGS
+# -------------------------------------------------------------------
+
+output:
+  width: 1280               # Video width in pixels
+  height: 720               # Video height in pixels
+  fps: 60                   # Frames per second
+  path: "output/bouncing_ball.mp4"
+  codec: libx264
+  bitrate: "8M"
+
+# -------------------------------------------------------------------
+# PHYSICS SETTINGS
+# -------------------------------------------------------------------
+
+physics:
+  gravity: [0, 980]         # [x, y] acceleration (pixels/second^2)
+  integrator: euler         # "euler" or "verlet"
+
+# -------------------------------------------------------------------
+# VISUAL SETTINGS
+# -------------------------------------------------------------------
+
+background:
+  color: "#1a1a2e"          # Dark blue background
+
+# -------------------------------------------------------------------
+# BOUNDARIES
+# -------------------------------------------------------------------
+
+boundaries:
+  # Outer circle (containment - ball stays inside)
+  - type: circle
+    id: outer_circle
+    center: [640, 360]      # Center of 1280x720 canvas
+    radius: 300
+    color: "#FFFFFF"
+    thickness: 3
+    is_containment: true    # Ball bounces off INSIDE
+
+# -------------------------------------------------------------------
+# BALLS
+# -------------------------------------------------------------------
+
+balls:
+  - id: ball_1
+    radius: 25
+    color: "#e74c3c"        # Nice red
+    position: [640, 150]    # Starting near top
+    velocity: [250, 50]     # Starting velocity (pixels/second)
+    restitution: 0.92       # Slight energy loss each bounce
+    mass: 1.0
+
+# -------------------------------------------------------------------
+# TRAILS (disabled for Phase 1)
+# -------------------------------------------------------------------
+
+trails:
+  enabled: false
+
+# -------------------------------------------------------------------
+# LOGGING
+# -------------------------------------------------------------------
+
+logging:
+  level: INFO
+  file: "logs/simulation.log"
+  console: true
