@@ -3,12 +3,12 @@
 import numpy as np
 from ..core.types import Entity
 from ..core.config_loader import BallConfig
-from ..math import from_list, magnitude_squared
+from ..math import from_list, magnitude_squared, shift_hue
 
 
 class Ball(Entity):
     """A bouncing ball entity."""
-    
+
     def __init__(
         self,
         id: str,
@@ -17,14 +17,22 @@ class Ball(Entity):
         radius: float,
         color: str,
         restitution: float = 0.9,
-        mass: float = 1.0
+        mass: float = 1.0,
+        hue_shift: str = "none",
+        hue_shift_speed: float = 60.0,
+        hue_shift_amount: float = 30.0
     ):
         super().__init__(id, position, velocity)
         self.radius = radius
-        self.color = color
+        self.base_color = color  # original color
+        self.color = color       # current color (may shift)
         self.restitution = restitution
         self.mass = mass
-    
+        self.hue_shift = hue_shift
+        self.hue_shift_speed = hue_shift_speed
+        self.hue_shift_amount = hue_shift_amount
+        self._hue_offset = 0.0  # accumulated hue shift
+
     @classmethod
     def from_config(cls, config: BallConfig) -> "Ball":
         """Create a Ball from configuration."""
@@ -35,13 +43,27 @@ class Ball(Entity):
             radius=config.radius,
             color=config.color,
             restitution=config.restitution,
-            mass=config.mass
+            mass=config.mass,
+            hue_shift=config.hue_shift,
+            hue_shift_speed=config.hue_shift_speed,
+            hue_shift_amount=config.hue_shift_amount
         )
-    
+
     def update(self, dt: float) -> None:
         """Update ball position based on velocity."""
         self.position += self.velocity * dt
-    
+
+        # Continuous hue shift
+        if self.hue_shift == "continuous":
+            self._hue_offset += self.hue_shift_speed * dt
+            self.color = shift_hue(self.base_color, self._hue_offset)
+
+    def on_collision(self) -> None:
+        """Called when ball collides with something."""
+        if self.hue_shift == "on_bounce":
+            self._hue_offset += self.hue_shift_amount
+            self.color = shift_hue(self.base_color, self._hue_offset)
+
     def get_render_data(self) -> dict:
         """Return data needed for rendering."""
         return {
@@ -51,11 +73,11 @@ class Ball(Entity):
             "radius": self.radius,
             "color": self.color,
         }
-    
+
     def get_kinetic_energy(self) -> float:
         """Calculate the ball's kinetic energy."""
         speed_squared = magnitude_squared(self.velocity)
         return 0.5 * self.mass * speed_squared
-    
+
     def __repr__(self) -> str:
         return f"Ball(id={self.id}, pos={self.position}, vel={self.velocity})"

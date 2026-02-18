@@ -52,6 +52,10 @@ class BallConfig:
     velocity: list[float]
     restitution: float = 0.9
     mass: float = 1.0
+    # Color shifting
+    hue_shift: str = "none"  # "none", "continuous", "on_bounce"
+    hue_shift_speed: float = 60.0  # degrees per second (continuous)
+    hue_shift_amount: float = 30.0  # degrees per bounce (on_bounce)
 
 
 @dataclass
@@ -76,6 +80,10 @@ class BoundaryConfig:
 class TrailConfig:
     """Trail system settings."""
     enabled: bool = False
+    mode: str = "snapshot"  # "snapshot" or "particle"
+    # Snapshot mode settings
+    interval: float = 0.2
+    max_count: int = 50
     max_age: float = 0.5
     spawn_rate: int = 2
     fade_curve: str = "exponential"
@@ -192,7 +200,7 @@ class ConfigLoader:
         background = BackgroundConfig(
             color=raw.get('background', {}).get('color', '#000000')
         )
-        
+
         balls = [
             BallConfig(
                 id=b['id'],
@@ -201,7 +209,10 @@ class ConfigLoader:
                 position=b['position'],
                 velocity=b['velocity'],
                 restitution=b.get('restitution', 0.9),
-                mass=b.get('mass', 1.0)
+                mass=b.get('mass', 1.0),
+                hue_shift=b.get('hue_shift', 'none'),
+                hue_shift_speed=b.get('hue_shift_speed', 60.0),
+                hue_shift_amount=b.get('hue_shift_amount', 30.0)
             )
             for b in raw['balls']
         ]
@@ -222,10 +233,13 @@ class ConfigLoader:
             )
             for b in raw['boundaries']
         ]
-        
+
         trails_raw = raw.get('trails', {})
         trails = TrailConfig(
             enabled=trails_raw.get('enabled', False),
+            mode=trails_raw.get('mode', 'snapshot'),
+            interval=trails_raw.get('interval', 0.2),
+            max_count=trails_raw.get('max_count', 50),
             max_age=trails_raw.get('max_age', 0.5),
             spawn_rate=trails_raw.get('spawn_rate', 2),
             fade_curve=trails_raw.get('fade_curve', 'exponential'),

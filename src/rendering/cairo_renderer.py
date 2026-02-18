@@ -91,36 +91,67 @@ class CairoRenderer:
         )
         self.ctx.set_source_rgb(r, g, b)
         self.ctx.fill()
+
+    def render_trail_particle(
+            self,
+            particle: "TrailParticle",
+            fade_curve: str,
+            size_decay: bool,
+            size_decay_factor: float,
+            mode: str = "snapshot"
+    ) -> None:
+        """Render a single trail particle."""
+        r, g, b = hex_to_rgb(particle.color)
+
+        if mode == "snapshot":
+            alpha = particle.base_alpha  # constant, no fade
+            radius = particle.radius  # constant, no shrink
+        else:
+            alpha = particle.get_alpha(fade_curve)
+            radius = particle.get_radius(size_decay, size_decay_factor)
+
+        self.ctx.arc(
+            particle.position[0],
+            particle.position[1],
+            radius,
+            0,
+            2 * math.pi
+        )
+        self.ctx.set_source_rgba(r, g, b, alpha)
+        self.ctx.fill()
     
     def end_frame(self) -> cairo.ImageSurface:
         """Finalize and return the frame surface."""
         return self.surface
-    
+
     def render_frame(
-        self,
-        background_color: str,
-        boundaries: list[Boundary],
-        balls: list[Ball]
+            self,
+            background_color: str,
+            boundaries: list[Boundary],
+            balls: list[Ball],
+            trail_system: "TrailSystem | None" = None
     ) -> cairo.ImageSurface:
-        """Render a complete frame.
-        
-        Args:
-            background_color: Background hex color
-            boundaries: List of boundaries to render
-            balls: List of balls to render
-            
-        Returns:
-            The rendered surface
-        """
+        """Render a complete frame."""
         self.begin_frame()
         self.render_background(background_color)
-        
+
         for boundary in boundaries:
             self.render_boundary(boundary)
-        
+
+        # Render trails before balls (behind)
+        if trail_system and trail_system.enabled:
+            for particle in trail_system.get_particles():
+                self.render_trail_particle(
+                    particle,
+                    trail_system.fade_curve,
+                    trail_system.size_decay,
+                    trail_system.size_decay_factor,
+                    trail_system.mode
+                )
+
         for ball in balls:
             self.render_ball(ball)
-        
+
         return self.end_frame()
     
     def get_frame_as_array(self) -> np.ndarray:

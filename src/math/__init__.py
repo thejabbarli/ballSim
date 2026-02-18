@@ -13,6 +13,7 @@ from .vector2 import (
     clamp,
     lerp,
 )
+from .color import hex_to_rgb, rgb_to_hex, shift_hue
 
 __all__ = [
     "vec2",
@@ -26,4 +27,7 @@ __all__ = [
     "reflect",
     "clamp",
     "lerp",
+    "hex_to_rgb",
+    "rgb_to_hex",
+    "shift_hue",
 ]

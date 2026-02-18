@@ -93,6 +93,8 @@ balls:
     velocity: [200, 50]
     restitution: 0.9
     mass: 1.0
+    hue_shift: continuous    # smooth rainbow
+    hue_shift_speed: 90      # degrees per second
 
   - id: ball_2
     radius: 25
@@ -101,21 +103,19 @@ balls:
     velocity: [-150, 80]
     restitution: 0.92
     mass: 1.2
+    hue_shift: on_bounce     # changes on collision
+    hue_shift_amount: 45     # degrees per bounce
 
-  - id: ball_3
-    radius: 18
-    color: "#f39c12"
-    position: [640, 80]
-    velocity: [50, 100]
-    restitution: 0.88
-    mass: 0.8
 
 # -------------------------------------------------------------------
 # TRAILS (disabled for Phase 2)
 # -------------------------------------------------------------------
 
 trails:
-  enabled: false
+  enabled: true
+  mode: snapshot
+  interval: 0.02      # snapshot every 0.2 seconds
+  max_count: 100      # keep max 50 per ball
 
 # -------------------------------------------------------------------
 # LOGGING

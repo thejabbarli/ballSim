@@ -2,6 +2,7 @@
 
 import logging
 from pathlib import Path
+from ..trails import TrailSystem
 
 from ..core.config_loader import Config, ConfigLoader
 from ..core.event_bus import EventBus
@@ -89,7 +90,10 @@ class SimulationFactory:
         
         # Create video exporter
         video_exporter = VideoExporter(config.output)
-        
+
+        # Create trail system
+        trail_system = TrailSystem(config.trails)
+
         # Assemble simulation
         return Simulation(
             config=config,
@@ -100,5 +104,6 @@ class SimulationFactory:
             collision_resolver=collision_resolver,
             renderer=renderer,
             video_exporter=video_exporter,
+            trail_system=trail_system,
             event_bus=event_bus
         )

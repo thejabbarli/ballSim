@@ -3,6 +3,7 @@
 import logging
 import sys
 
+
 # Try to import tqdm, fallback to simple progress bar
 try:
     from tqdm import tqdm
@@ -47,18 +48,19 @@ logger = logging.getLogger('ballsim.simulation')
 
 class Simulation:
     """Main simulation orchestrator - coordinates all systems."""
-    
+
     def __init__(
-        self,
-        config: Config,
-        balls: list[Ball],
-        boundaries: list[Boundary],
-        physics_engine: PhysicsEngine,
-        collision_dispatcher: CollisionDispatcher,
-        collision_resolver: CollisionResolver,
-        renderer: CairoRenderer,
-        video_exporter: VideoExporter,
-        event_bus: EventBus
+            self,
+            config: Config,
+            balls: list[Ball],
+            boundaries: list[Boundary],
+            physics_engine: PhysicsEngine,
+            collision_dispatcher: CollisionDispatcher,
+            collision_resolver: CollisionResolver,
+            renderer: CairoRenderer,
+            video_exporter: VideoExporter,
+            event_bus: EventBus,
+            trail_system: "TrailSystem"
     ):
         self.config = config
         self.balls = balls
@@ -69,7 +71,8 @@ class Simulation:
         self.renderer = renderer
         self.video_exporter = video_exporter
         self.event_bus = event_bus
-        
+        self.trail_system = trail_system
+
         # Calculate timing
         self.duration = config.simulation.duration_seconds
         self.fps = config.output.fps
@@ -77,7 +80,7 @@ class Simulation:
         self.total_frames = int(self.duration * self.fps)
         self.frame_dt = 1.0 / self.fps
         self.physics_dt = self.frame_dt / self.substeps
-        
+
         self.current_time = 0.0
         self.current_frame = 0
     
@@ -96,24 +99,30 @@ class Simulation:
         logger.info("Simulation complete. Encoding video...")
         self.video_exporter.finalize()
         logger.info(f"Video saved to: {self.video_exporter.path}")
-    
+
     def _simulate_frame(self) -> None:
         """Run physics simulation for one frame (multiple substeps)."""
         for _ in range(self.substeps):
             # Update physics (gravity, integration)
             self.physics_engine.update(self.balls, self.physics_dt)
-            
+
             # Detect collisions
             collisions = self.collision_dispatcher.detect_all(
                 self.balls,
                 self.boundaries,
                 self.current_time
             )
-            
+
             # Resolve collisions
             for collision in collisions:
                 self.collision_resolver.resolve(collision)
-                
+
+                # Trigger ball color change on bounce
+                if isinstance(collision.entity_a, Ball):
+                    collision.entity_a.on_collision()
+                if isinstance(collision.entity_b, Ball):
+                    collision.entity_b.on_collision()
+
                 # Emit collision event
                 if isinstance(collision.entity_a, Ball):
                     event = CollisionEvent(
@@ -125,20 +134,22 @@ class Simulation:
                         intensity=collision.relative_velocity
                     )
                     self.event_bus.emit(event)
-            
+
             self.current_time += self.physics_dt
-        
+
+        # Update trails ONCE per frame, after physics
+        self.trail_system.update(self.balls, self.frame_dt)
+
         self.current_frame += 1
-    
+
     def _render_frame(self) -> None:
         """Render and export one frame."""
-        # Render the frame
         self.renderer.render_frame(
             self.config.background.color,
             self.boundaries,
-            self.balls
+            self.balls,
+            self.trail_system
         )
-        
-        # Get frame as numpy array and export
+
         frame_array = self.renderer.get_frame_as_array()
         self.video_exporter.write_frame(frame_array)
