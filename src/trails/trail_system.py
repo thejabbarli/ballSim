@@ -60,8 +60,8 @@ class TrailSystem:
                 )
                 self._snapshots[ball.id].append(snapshot)
 
-                # Enforce max count
-                if len(self._snapshots[ball.id]) > self.max_count:
+                # Enforce max count (0 = unlimited)
+                if self.max_count > 0 and len(self._snapshots[ball.id]) > self.max_count:
                     self._snapshots[ball.id].pop(0)  # remove oldest
 
     def _update_particle(self, balls: list[Ball], dt: float) -> None:

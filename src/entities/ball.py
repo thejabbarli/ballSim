@@ -23,7 +23,11 @@ class Ball(Entity):
             hue_shift_amount: float = 30.0,
             outline: bool = False,
             outline_color: str = "#ffffff",
-            outline_thickness: float = 2.0
+            outline_thickness: float = 2.0,
+            glow: bool = False,
+            glow_radius: float = 20.0,
+            glow_intensity: float = 0.5,
+            glow_color: str | None = None
     ):
         super().__init__(id, position, velocity)
         self.radius = radius
@@ -38,10 +42,13 @@ class Ball(Entity):
         self.outline = outline
         self.outline_color = outline_color
         self.outline_thickness = outline_thickness
+        self.glow = glow
+        self.glow_radius = glow_radius
+        self.glow_intensity = glow_intensity
+        self.glow_color = glow_color
 
     @classmethod
     def from_config(cls, config: BallConfig) -> "Ball":
-        """Create a Ball from configuration."""
         return cls(
             id=config.id,
             position=from_list(config.position),
@@ -55,7 +62,11 @@ class Ball(Entity):
             hue_shift_amount=config.hue_shift_amount,
             outline=config.outline,
             outline_color=config.outline_color,
-            outline_thickness=config.outline_thickness
+            outline_thickness=config.outline_thickness,
+            glow=config.glow,
+            glow_radius=config.glow_radius,
+            glow_intensity=config.glow_intensity,
+            glow_color=config.glow_color
         )
 
     def update(self, dt: float) -> None:

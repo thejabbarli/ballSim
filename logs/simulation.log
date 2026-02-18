@@ -89,3 +89,66 @@
 2026-02-18 21:09:22,855 | INFO     | ballsim.simulation | Physics: 4 substeps/frame (dt=0.004167s)
 2026-02-18 21:09:31,708 | INFO     | ballsim.simulation | Simulation complete. Encoding video...
 2026-02-18 21:09:31,896 | INFO     | ballsim.simulation | Video saved to: output/multi_ball_20260218_210922.mp4
+2026-02-18 21:19:26,469 | INFO     | ballsim.factory | Creating simulation from: config\phase2_test.yaml
+2026-02-18 21:19:26,469 | INFO     | ballsim.factory | Created 2 ball(s)
+2026-02-18 21:19:26,469 | INFO     | ballsim.factory | Created 4 boundary(ies)
+2026-02-18 21:19:26,617 | INFO     | ballsim.simulation | Starting simulation: 8s at 60fps (480 frames)
+2026-02-18 21:19:26,617 | INFO     | ballsim.simulation | Physics: 4 substeps/frame (dt=0.004167s)
+2026-02-18 21:19:34,275 | INFO     | ballsim.simulation | Simulation complete. Encoding video...
+2026-02-18 21:19:34,392 | INFO     | ballsim.simulation | Video saved to: output/multi_ball_20260218_211926.mp4
+2026-02-18 21:21:24,128 | INFO     | ballsim.factory | Creating simulation from: config\phase2_test.yaml
+2026-02-18 21:21:24,129 | INFO     | ballsim.factory | Created 2 ball(s)
+2026-02-18 21:21:24,129 | INFO     | ballsim.factory | Created 4 boundary(ies)
+2026-02-18 21:21:24,276 | INFO     | ballsim.simulation | Starting simulation: 8s at 60fps (480 frames)
+2026-02-18 21:21:24,276 | INFO     | ballsim.simulation | Physics: 4 substeps/frame (dt=0.004167s)
+2026-02-18 21:21:32,429 | INFO     | ballsim.simulation | Simulation complete. Encoding video...
+2026-02-18 21:21:32,537 | INFO     | ballsim.simulation | Video saved to: output/multi_ball_20260218_212124.mp4
+2026-02-18 21:22:39,406 | INFO     | ballsim.factory | Creating simulation from: config\phase2_test.yaml
+2026-02-18 21:22:39,406 | INFO     | ballsim.factory | Created 2 ball(s)
+2026-02-18 21:22:39,407 | INFO     | ballsim.factory | Created 4 boundary(ies)
+2026-02-18 21:22:39,506 | INFO     | ballsim.simulation | Starting simulation: 8s at 60fps (480 frames)
+2026-02-18 21:22:39,507 | INFO     | ballsim.simulation | Physics: 4 substeps/frame (dt=0.004167s)
+2026-02-18 21:22:49,128 | INFO     | ballsim.simulation | Simulation complete. Encoding video...
+2026-02-18 21:22:49,287 | INFO     | ballsim.simulation | Video saved to: output/multi_ball_20260218_212239.mp4
+2026-02-18 21:26:12,050 | INFO     | ballsim.factory | Creating simulation from: config\phase2_test.yaml
+2026-02-18 21:26:12,050 | INFO     | ballsim.factory | Created 2 ball(s)
+2026-02-18 21:26:12,050 | INFO     | ballsim.factory | Created 4 boundary(ies)
+2026-02-18 21:26:12,208 | INFO     | ballsim.simulation | Starting simulation: 8s at 60fps (480 frames)
+2026-02-18 21:26:12,209 | INFO     | ballsim.simulation | Physics: 4 substeps/frame (dt=0.004167s)
+2026-02-18 21:26:17,517 | INFO     | ballsim.simulation | Simulation complete. Encoding video...
+2026-02-18 21:26:17,617 | INFO     | ballsim.simulation | Video saved to: output/multi_ball_20260218_212612.mp4
+2026-02-18 21:27:58,376 | INFO     | ballsim.factory | Creating simulation from: config\phase2_test.yaml
+2026-02-18 21:27:58,376 | INFO     | ballsim.factory | Created 2 ball(s)
+2026-02-18 21:27:58,377 | INFO     | ballsim.factory | Created 4 boundary(ies)
+2026-02-18 21:27:58,519 | INFO     | ballsim.simulation | Starting simulation: 8s at 60fps (480 frames)
+2026-02-18 21:27:58,520 | INFO     | ballsim.simulation | Physics: 4 substeps/frame (dt=0.004167s)
+2026-02-18 21:28:10,955 | INFO     | ballsim.simulation | Simulation complete. Encoding video...
+2026-02-18 21:28:11,058 | INFO     | ballsim.simulation | Video saved to: output/multi_ball_20260218_212758.mp4
+2026-02-18 21:43:02,971 | INFO     | ballsim.factory | Creating simulation from: config\phase2_test.yaml
+2026-02-18 21:43:02,972 | INFO     | ballsim.factory | Created 2 ball(s)
+2026-02-18 21:43:02,972 | INFO     | ballsim.factory | Created 2 boundary(ies)
+2026-02-18 21:43:03,133 | INFO     | ballsim.simulation | Starting simulation: 8s at 60fps (480 frames)
+2026-02-18 21:43:03,134 | INFO     | ballsim.simulation | Physics: 4 substeps/frame (dt=0.004167s)
+2026-02-18 21:43:15,454 | INFO     | ballsim.simulation | Simulation complete. Encoding video...
+2026-02-18 21:43:15,558 | INFO     | ballsim.simulation | Video saved to: output/multi_ball_20260218_214302.mp4
+2026-02-18 21:44:51,903 | INFO     | ballsim.factory | Creating simulation from: config\phase2_test.yaml
+2026-02-18 21:44:51,903 | INFO     | ballsim.factory | Created 3 ball(s)
+2026-02-18 21:44:51,904 | INFO     | ballsim.factory | Created 2 boundary(ies)
+2026-02-18 21:44:52,054 | INFO     | ballsim.simulation | Starting simulation: 8s at 60fps (480 frames)
+2026-02-18 21:44:52,054 | INFO     | ballsim.simulation | Physics: 4 substeps/frame (dt=0.004167s)
+2026-02-18 21:45:10,463 | INFO     | ballsim.simulation | Simulation complete. Encoding video...
+2026-02-18 21:45:10,599 | INFO     | ballsim.simulation | Video saved to: output/multi_ball_20260218_214451.mp4
+2026-02-18 21:46:46,487 | INFO     | ballsim.factory | Creating simulation from: config\phase2_test.yaml
+2026-02-18 21:46:46,488 | INFO     | ballsim.factory | Created 3 ball(s)
+2026-02-18 21:46:46,488 | INFO     | ballsim.factory | Created 2 boundary(ies)
+2026-02-18 21:46:46,632 | INFO     | ballsim.simulation | Starting simulation: 8s at 60fps (480 frames)
+2026-02-18 21:46:46,632 | INFO     | ballsim.simulation | Physics: 4 substeps/frame (dt=0.004167s)
+2026-02-18 21:47:09,704 | INFO     | ballsim.simulation | Simulation complete. Encoding video...
+2026-02-18 21:47:09,882 | INFO     | ballsim.simulation | Video saved to: output/multi_ball_20260218_214646.mp4
+2026-02-18 21:54:22,788 | INFO     | ballsim.factory | Creating simulation from: config\phase2_test.yaml
+2026-02-18 21:54:22,789 | INFO     | ballsim.factory | Created 3 ball(s)
+2026-02-18 21:54:22,789 | INFO     | ballsim.factory | Created 2 boundary(ies)
+2026-02-18 21:54:22,997 | INFO     | ballsim.simulation | Starting simulation: 8s at 60fps (480 frames)
+2026-02-18 21:54:22,997 | INFO     | ballsim.simulation | Physics: 4 substeps/frame (dt=0.004167s)
+2026-02-18 21:54:41,791 | INFO     | ballsim.simulation | Simulation complete. Encoding video...
+2026-02-18 21:54:41,956 | INFO     | ballsim.simulation | Video saved to: output/multi_ball_20260218_215422.mp4

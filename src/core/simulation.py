@@ -110,6 +110,10 @@ class Simulation:
             for ball in self.balls:
                 ball.update(self.physics_dt)
 
+            # Update boundary effects (color shifting)
+            for boundary in self.boundaries:
+                boundary.update(self.physics_dt)
+
             # Detect collisions
             collisions = self.collision_dispatcher.detect_all(
                 self.balls,
@@ -121,11 +125,16 @@ class Simulation:
             for collision in collisions:
                 self.collision_resolver.resolve(collision)
 
-                # Trigger ball color change on bounce
+                # Trigger color change on bounce
                 if isinstance(collision.entity_a, Ball):
                     collision.entity_a.on_collision()
                 if isinstance(collision.entity_b, Ball):
                     collision.entity_b.on_collision()
+
+                # Trigger boundary color change on contact
+                from .types import Boundary
+                if isinstance(collision.entity_b, Boundary):
+                    collision.entity_b.on_contact()
 
                 # Emit collision event
                 if isinstance(collision.entity_a, Ball):

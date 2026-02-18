@@ -60,6 +60,11 @@ class BallConfig:
     outline: bool = False
     outline_color: str = "#ffffff"
     outline_thickness: float = 2.0
+    # Glow
+    glow: bool = False
+    glow_radius: float = 20.0  # extra radius beyond ball edge
+    glow_intensity: float = 0.5  # 0.0 to 1.0
+    glow_color: str | None = None  # None = same as ball color
 
 
 @dataclass
@@ -78,6 +83,10 @@ class BoundaryConfig:
     y: float | None = None
     width: float | None = None
     height: float | None = None
+    # Color shifting
+    hue_shift: str = "none"  # "none", "continuous", "on_contact"
+    hue_shift_speed: float = 60.0
+    hue_shift_amount: float = 30.0
 
 
 @dataclass
@@ -219,11 +228,15 @@ class ConfigLoader:
                 hue_shift_amount=b.get('hue_shift_amount', 30.0),
                 outline=b.get('outline', False),
                 outline_color=b.get('outline_color', '#ffffff'),
-                outline_thickness=b.get('outline_thickness', 2.0)
+                outline_thickness=b.get('outline_thickness', 2.0),
+                glow=b.get('glow', False),
+                glow_radius=b.get('glow_radius', 20.0),
+                glow_intensity=b.get('glow_intensity', 0.5),
+                glow_color=b.get('glow_color', None)
             )
             for b in raw['balls']
         ]
-        
+
         boundaries = [
             BoundaryConfig(
                 type=b['type'],
@@ -236,7 +249,10 @@ class ConfigLoader:
                 x=b.get('x'),
                 y=b.get('y'),
                 width=b.get('width'),
-                height=b.get('height')
+                height=b.get('height'),
+                hue_shift=b.get('hue_shift', 'none'),
+                hue_shift_speed=b.get('hue_shift_speed', 60.0),
+                hue_shift_amount=b.get('hue_shift_amount', 30.0)
             )
             for b in raw['boundaries']
         ]

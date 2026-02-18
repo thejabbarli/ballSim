@@ -41,16 +41,16 @@ background:
 # -------------------------------------------------------------------
 
 boundaries:
-  # Outer circle (containment)
   - type: circle
     id: outer_circle
     center: [640, 360]
     radius: 340
-    color: "#FFFFFF"
-    thickness: 3
+    color: "#ffffff"
+    thickness: 5
     is_containment: true
+    hue_shift: continuous
+    hue_shift_speed: 45
 
-  # Inner circle obstacle
   - type: circle
     id: inner_obstacle
     center: [640, 360]
@@ -58,28 +58,8 @@ boundaries:
     color: "#e74c3c"
     thickness: 2
     is_containment: false
-
-  # Rectangle obstacle - left
-  - type: rectangle
-    id: rect_left
-    x: 350
-    y: 280
-    width: 80
-    height: 160
-    color: "#3498db"
-    thickness: 2
-    is_containment: false
-
-  # Rectangle obstacle - right
-  - type: rectangle
-    id: rect_right
-    x: 850
-    y: 280
-    width: 80
-    height: 160
-    color: "#3498db"
-    thickness: 2
-    is_containment: false
+    hue_shift: on_contact
+    hue_shift_amount: 60
 
 # -------------------------------------------------------------------
 # BALLS
@@ -93,11 +73,15 @@ balls:
     velocity: [200, 50]
     restitution: 0.99
     mass: 1.0
-    hue_shift: continuous    # smooth rainbow
-    hue_shift_speed: 90      # degrees per second
-    outline: true
+    hue_shift: continuous
+    hue_shift_speed: 90
+    outline: false
     outline_color: "#ffffff"
-    outline_thickness: 3
+    outline_thickness: 2
+    glow: false
+    glow_radius: 30
+    glow_intensity: 0.6
+    # glow_color: "#ff0000"  # omit to use ball's current color (follows hue shift)
 
   - id: ball_2
     radius: 20
@@ -106,11 +90,24 @@ balls:
     velocity: [-150, 80]
     restitution: 0.99
     mass: 1.0
-    hue_shift: on_bounce     # changes on collision
-    hue_shift_amount: 45     # degrees per bounce
-    outline: false
-    outline_color: "#ffffff"
-    outline_thickness: 3
+    hue_shift: on_bounce
+    hue_shift_amount: 45
+    glow: true
+    glow_radius: 30
+    glow_intensity: 0.6
+
+  - id: ball_3
+    radius: 30
+    color: "#2eac11"
+    position: [580, 120]
+    velocity: [-150, 80]
+    restitution: 0.99
+    mass: 1.0
+    hue_shift: on_bounce
+    hue_shift_amount: 45
+    glow: true
+    glow_radius: 30
+    glow_intensity: 0.6
 
 
 # -------------------------------------------------------------------
@@ -120,8 +117,8 @@ balls:
 trails:
   enabled: true
   mode: snapshot
-  interval: 0.02      # snapshot every 0.2 seconds
-  max_count: 100      # keep max 50 per ball
+  interval: 0.01      # snapshot every 0.2 seconds
+  max_count: 999      # keep max 50 per ball
 
 # -------------------------------------------------------------------
 # LOGGING

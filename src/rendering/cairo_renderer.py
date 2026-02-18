@@ -106,6 +106,37 @@ class CairoRenderer:
             self.ctx.set_line_width(ball.outline_thickness)
             self.ctx.stroke()
 
+    def render_glow(self, ball: Ball) -> None:
+        """Render neon glow effect behind a ball."""
+        if not ball.glow:
+            return
+
+        glow_color = ball.glow_color if ball.glow_color else ball.color
+        r, g, b = hex_to_rgb(glow_color)
+
+        cx, cy = ball.position[0], ball.position[1]
+
+        # Outer soft glow
+        outer_radius = ball.radius + ball.glow_radius
+        pattern1 = cairo.RadialGradient(cx, cy, ball.radius * 0.8, cx, cy, outer_radius)
+        pattern1.add_color_stop_rgba(0, r, g, b, ball.glow_intensity * 0.8)
+        pattern1.add_color_stop_rgba(0.5, r, g, b, ball.glow_intensity * 0.3)
+        pattern1.add_color_stop_rgba(1, r, g, b, 0)
+
+        self.ctx.set_source(pattern1)
+        self.ctx.arc(cx, cy, outer_radius, 0, 2 * math.pi)
+        self.ctx.fill()
+
+        # Inner bright glow (tighter, more intense)
+        inner_glow_radius = ball.radius + ball.glow_radius * 0.3
+        pattern2 = cairo.RadialGradient(cx, cy, ball.radius, cx, cy, inner_glow_radius)
+        pattern2.add_color_stop_rgba(0, r, g, b, ball.glow_intensity)
+        pattern2.add_color_stop_rgba(1, r, g, b, 0)
+
+        self.ctx.set_source(pattern2)
+        self.ctx.arc(cx, cy, inner_glow_radius, 0, 2 * math.pi)
+        self.ctx.fill()
+
     def render_trail_particle(
             self,
             particle: "TrailParticle",
@@ -152,7 +183,11 @@ class CairoRenderer:
         for boundary in boundaries:
             self.render_boundary(boundary)
 
-        # Render trails before balls (behind)
+        # Render glows first (behind everything)
+        for ball in balls:
+            self.render_glow(ball)
+
+        # Render trails
         if trail_system and trail_system.enabled:
             for particle in trail_system.get_particles():
                 self.render_trail_particle(
@@ -163,6 +198,7 @@ class CairoRenderer:
                     trail_system.mode
                 )
 
+        # Render balls on top
         for ball in balls:
             self.render_ball(ball)
 
